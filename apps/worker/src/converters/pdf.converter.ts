@@ -74,3 +74,26 @@ export async function convertPdfToText(inputBuffer: Buffer): Promise<Buffer> {
     await rm(tempDir, { recursive: true, force: true })
   }
 }
+
+/**
+ * Convert PDF to DOCX using Python's pdf2docx library.
+ * This provides significantly better layout retention than LibreOffice Draw.
+ */
+export async function convertPdfToDocx(inputBuffer: Buffer): Promise<Buffer> {
+  const tempDir = await mkdtemp(join(tmpdir(), 'whatpdf-docx-'))
+  const inputPath = join(tempDir, 'input.pdf')
+  const outputPath = join(tempDir, 'out.docx')
+  
+  try {
+    await writeFile(inputPath, inputBuffer)
+    
+    // pdf2docx CLI: pdf2docx convert <input> <output>
+    const cmd = `pdf2docx convert "${inputPath}" "${outputPath}"`
+    await execAsync(cmd, { timeout: 120_000 }) // 2 min timeout
+    
+    const outputBuffer = await readFile(outputPath)
+    return outputBuffer
+  } finally {
+    await rm(tempDir, { recursive: true, force: true })
+  }
+}

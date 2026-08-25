@@ -33,7 +33,7 @@ export const CONVERSION_ROUTES: ConversionRoute[] = [
   // --------------------------------------------
   // Document Conversions
   // --------------------------------------------
-  { from: 'pdf',  to: 'docx', category: 'document', engine: 'libreoffice', label: { en: 'PDF to Word',        th: 'PDF เป็น Word' } },
+  { from: 'pdf',  to: 'docx', category: 'document', engine: 'pdf2docx',    label: { en: 'PDF to Word',        th: 'PDF เป็น Word' } },
   { from: 'pdf',  to: 'pptx', category: 'document', engine: 'libreoffice', label: { en: 'PDF to PowerPoint',  th: 'PDF เป็น PowerPoint' } },
   { from: 'pdf',  to: 'xlsx', category: 'document', engine: 'libreoffice', label: { en: 'PDF to Excel',       th: 'PDF เป็น Excel' } },
   { from: 'pdf',  to: 'txt',  category: 'document', engine: 'poppler',     label: { en: 'PDF to Text',        th: 'PDF เป็น ข้อความ (TXT)' } },
