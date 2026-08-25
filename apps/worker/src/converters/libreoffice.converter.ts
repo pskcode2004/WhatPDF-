@@ -62,14 +62,20 @@ export async function convertWithLibreOffice(
       ? `"${outputFormat}:${filterName}"`
       : outputFormat
 
+    // When importing a PDF, we must tell LibreOffice to use the Writer PDF import
+    // filter (text-based), NOT the Draw importer (graphics-based).
+    // Without this, it opens as a drawing and cannot export to DOCX/XLSX/PPTX.
+    const infilter = inputFormat === 'pdf' ? '--infilter="writer_pdf_import"' : ''
+
     const cmd = [
       'libreoffice',
       '--headless',
       '--norestore',
+      infilter,
       `--convert-to ${convertTo}`,
       `--outdir "${tempDir}"`,
       `"${inputPath}"`,
-    ].join(' ')
+    ].filter(Boolean).join(' ')
 
     const { stderr } = await execAsync(cmd, { timeout: 120_000 }) // 2 min timeout
 
