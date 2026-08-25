@@ -9,15 +9,16 @@
     "converting": "Converting...",
     "done": "Conversion Complete!",
     "error": "An error occurred. Please try again.",
-    "fileExpiry": "Files are automatically deleted after 24 hours.",
+    "fileExpiry": "Ready for download",
     "convertAnother": "Convert another file",
     "fileSize": "File size",
-    "selectFormat": "Select output format",
+    "selectFormat": "Select desired format",
     "freeForever": "100% Free Forever",
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",
-    "contact": "Contact",
-    "autoDeleteNotice": "All uploaded files are automatically deleted after 24 hours for your privacy and security."
+    "contact": "Contact Us",
+    "autoDeleteNotice": "All files you upload will be automatically deleted from our servers immediately after you download them for your security and privacy.",
+    "autoDeleting": "Downloading... The file will be automatically deleted from our servers."
   },
   "nav": {
     "home": "Home",

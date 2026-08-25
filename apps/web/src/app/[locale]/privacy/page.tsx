@@ -21,7 +21,7 @@ export default async function PrivacyPage({
               <p><strong>WhatPDF?</strong> เคารพในความเป็นส่วนตัวของคุณ นโยบายนี้อธิบายถึงวิธีการที่เราจัดการกับไฟล์และข้อมูลของคุณ</p>
               
               <h2 className="text-xl font-semibold text-gray-900 mt-8">1. การจัดเก็บและการลบไฟล์</h2>
-              <p>ไฟล์ทั้งหมดที่คุณอัปโหลดเพื่อทำการแปลง จะถูกเก็บไว้ในเซิร์ฟเวอร์ของเราชั่วคราวเท่านั้น ระบบจะทำการลบไฟล์ต้นฉบับและไฟล์ที่แปลงเสร็จแล้ว <strong>โดยอัตโนมัติภายใน 24 ชั่วโมง</strong> คุณไม่จำเป็นต้องดำเนินการลบด้วยตนเอง</p>
+              <p>ไฟล์ทั้งหมดที่คุณอัปโหลดเพื่อทำการแปลง จะถูกเก็บไว้ในเซิร์ฟเวอร์ของเราชั่วคราวเท่านั้น ระบบจะทำการลบไฟล์ต้นฉบับและไฟล์ที่แปลงเสร็จแล้ว <strong>โดยอัตโนมัติทันทีที่คุณดาวน์โหลดเสร็จ</strong> คุณไม่จำเป็นต้องดำเนินการลบด้วยตนเอง</p>
               
               <h2 className="text-xl font-semibold text-gray-900 mt-8">2. ความปลอดภัยของข้อมูล</h2>
               <p>เราไม่มีการเปิดดู แก้ไข หรือนำไฟล์ของคุณไปใช้เพื่อวัตถุประสงค์อื่นใด นอกเหนือจากการแปลงไฟล์ตามคำสั่งของคุณเท่านั้น ไฟล์ของคุณจะถูกเก็บเป็นความลับ</p>
@@ -37,7 +37,7 @@ export default async function PrivacyPage({
               <p><strong>WhatPDF?</strong> respects your privacy. This policy explains how we handle your files and data.</p>
               
               <h2 className="text-xl font-semibold text-gray-900 mt-8">1. File Storage and Deletion</h2>
-              <p>All files you upload for conversion are stored on our servers temporarily. The system will <strong>automatically delete both the original and converted files within 24 hours</strong>. You do not need to delete them manually.</p>
+              <p>All files you upload for conversion are stored on our servers temporarily. The system will <strong>automatically delete both the original and converted files immediately after you download them</strong>. You do not need to delete them manually.</p>
               
               <h2 className="text-xl font-semibold text-gray-900 mt-8">2. Data Security</h2>
               <p>We do not view, edit, or use your files for any purpose other than converting them according to your request. Your files are kept strictly confidential.</p>

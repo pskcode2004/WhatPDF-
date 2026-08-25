@@ -8,7 +8,7 @@ import { deleteFile } from '../storage/r2'
 import type Redis from 'ioredis'
 
 const INTERVAL_MS = 60 * 60 * 1000  // 1 hour
-const TTL_MS      = 24 * 60 * 60 * 1000  // 24 hours
+const TTL_MS      = 60 * 60 * 1000  // 1 hour (fallback if they never downloaded)
 
 export function startCleanupCron(redisConnection: Redis) {
   setInterval(async () => {
