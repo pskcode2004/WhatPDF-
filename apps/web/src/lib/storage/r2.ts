@@ -43,15 +43,23 @@ export async function uploadFile(
   )
 }
 
-/** Generate a presigned download URL valid for 24 hours */
-export async function getPresignedDownloadUrl(key: string, expiresInSeconds = 86400): Promise<string> {
+/** Generate a presigned download URL valid for 24 hours (forces download) */
+export async function getPresignedDownloadUrl(key: string, expiresInSeconds = 86400, originalFormat?: string): Promise<string> {
   if (isLocalFallback) {
     return `/api/download-local?key=${encodeURIComponent(key)}`
   }
 
+  // Use the file extension from the key if originalFormat is not provided
+  const extension = originalFormat || key.split('.').pop() || 'file'
+  const filename = `whatpdf-converted.${extension}`
+
   return getSignedUrl(
     s3Client!,
-    new GetObjectCommand({ Bucket: BUCKET, Key: key }),
+    new GetObjectCommand({ 
+      Bucket: BUCKET, 
+      Key: key,
+      ResponseContentDisposition: `attachment; filename="${filename}"` 
+    }),
     { expiresIn: expiresInSeconds },
   )
 }
