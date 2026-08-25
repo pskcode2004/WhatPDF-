@@ -1,0 +1,29 @@
+# ============================================
+# WhatPDF Local Development Stack
+# Run: docker-compose up -d
+# ============================================
+version: '3.9'
+
+services:
+  # Redis — Job Queue & caching
+  redis:
+    image: redis:7-alpine
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+
+  # LibreOffice — Document conversion (Word, Excel, PPT)
+  libreoffice:
+    image: linuxserver/libreoffice:latest
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - ./tmp/conversions:/conversions
+    ports:
+      - '3002:3000'
+
+volumes:
+  redis_data:

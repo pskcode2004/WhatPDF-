@@ -1,0 +1,38 @@
+{
+  "common": {
+    "appName": "WhatPDF",
+    "tagline": "The Ultimate 100% Free File Converter",
+    "uploadPrompt": "Drag & drop files here, or click to select",
+    "convertTo": "Convert to",
+    "convert": "Convert Now",
+    "download": "Download File",
+    "converting": "Converting...",
+    "done": "Conversion Complete!",
+    "error": "An error occurred. Please try again.",
+    "fileExpiry": "Files are automatically deleted after 24 hours.",
+    "convertAnother": "Convert another file",
+    "fileSize": "File size",
+    "selectFormat": "Select output format",
+    "freeForever": "100% Free Forever",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "contact": "Contact",
+    "autoDeleteNotice": "All uploaded files are automatically deleted after 24 hours for your privacy and security."
+  },
+  "nav": {
+    "home": "Home",
+    "tools": "Tools"
+  },
+  "categories": {
+    "all": "All",
+    "document": "Documents",
+    "image": "Images",
+    "spreadsheet": "Spreadsheets"
+  },
+  "errors": {
+    "fileTooBig": "File is too large",
+    "unsupportedFormat": "Unsupported file format",
+    "conversionFailed": "Conversion failed. Please try again.",
+    "uploadFailed": "Upload failed. Please try again."
+  }
+}
