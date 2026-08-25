@@ -8,6 +8,18 @@ import Redis from 'ioredis'
 import { convertFile } from './converters'
 import { startCleanupCron } from './cleanup/cron'
 import type { ConversionJob } from '@whatpdf/shared'
+import http from 'http'
+
+// --- Dummy HTTP Server for Render Free Tier ---
+// Render Web Services require a port to be bound, otherwise the deploy fails.
+const port = process.env.PORT || 3001
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' })
+  res.end('WhatPDF Worker is running healthy!\n')
+})
+server.listen(port, () => {
+  console.log(`[worker] Dummy HTTP server listening on port ${port} (Render requirement)`)
+})
 
 const redisConnection = new Redis(process.env.REDIS_URL ?? 'redis://localhost:6379', {
   maxRetriesPerRequest: null, // Required by BullMQ
