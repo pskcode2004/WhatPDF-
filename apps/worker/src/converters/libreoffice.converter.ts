@@ -62,10 +62,20 @@ export async function convertWithLibreOffice(
       ? `"${outputFormat}:${filterName}"`
       : outputFormat
 
-    // When importing a PDF, we must tell LibreOffice to use the Writer PDF import
-    // filter (text-based), NOT the Draw importer (graphics-based).
-    // Without this, it opens as a drawing and cannot export to DOCX/XLSX/PPTX.
-    const infilter = inputFormat === 'pdf' ? '--infilter="writer_pdf_import"' : ''
+    // When importing a PDF, LibreOffice must open it in the correct application
+    // to export it properly. Writer for Word, Impress for PPT, Calc for Excel.
+    let infilter = ''
+    if (inputFormat === 'pdf') {
+      if (['docx', 'doc', 'rtf', 'odt'].includes(outputFormat)) {
+        infilter = '--infilter="writer_pdf_import"'
+      } else if (['pptx', 'ppt', 'odp'].includes(outputFormat)) {
+        infilter = '--infilter="impress_pdf_import"'
+      } else if (['xlsx', 'xls', 'csv', 'ods'].includes(outputFormat)) {
+        infilter = '--infilter="calc_pdf_import"'
+      } else {
+        infilter = '--infilter="draw_pdf_import"'
+      }
+    }
 
     const cmd = [
       'libreoffice',
