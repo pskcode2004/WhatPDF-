@@ -28,10 +28,8 @@ COPY package.json ./
 COPY packages/shared ./packages/shared
 COPY apps/worker ./apps/worker
 
-# Install only worker dependencies
+# Install only worker dependencies (and tsx for running it)
 RUN pnpm install --filter @whatpdf/worker...
+RUN pnpm add -g tsx
 
-# Build TypeScript
-RUN pnpm --filter @whatpdf/worker build
-
-CMD ["node", "apps/worker/dist/index.js"]
+CMD ["tsx", "apps/worker/src/index.ts"]
