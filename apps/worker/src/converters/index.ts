@@ -53,9 +53,10 @@ export async function convertFile(opts: ConvertOptions): Promise<ConvertResult> 
 
   } else if (
     (OFFICE_FORMATS.includes(from) && to === 'pdf') ||
+    (from === 'pdf' && OFFICE_FORMATS.includes(to)) ||
     (OFFICE_FORMATS.includes(from) && OFFICE_FORMATS.includes(to))
   ) {
-    // Office ↔ PDF or Office ↔ Office — LibreOffice
+    // Office ↔ PDF or PDF → Office or Office ↔ Office — LibreOffice
     outputBuffer = await convertWithLibreOffice(inputBuffer, from, to)
 
   } else {

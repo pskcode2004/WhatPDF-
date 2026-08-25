@@ -33,11 +33,14 @@ export const CONVERSION_ROUTES: ConversionRoute[] = [
   // --------------------------------------------
   // Document Conversions
   // --------------------------------------------
-  { from: 'docx', to: 'pdf', category: 'document', engine: 'libreoffice', label: { en: 'Word to PDF',        th: 'Word เป็น PDF' } },
-  { from: 'doc',  to: 'pdf', category: 'document', engine: 'libreoffice', label: { en: 'Word to PDF',        th: 'Word เป็น PDF' } },
-  { from: 'pptx', to: 'pdf', category: 'document', engine: 'libreoffice', label: { en: 'PowerPoint to PDF',  th: 'PowerPoint เป็น PDF' } },
-  { from: 'ppt',  to: 'pdf', category: 'document', engine: 'libreoffice', label: { en: 'PowerPoint to PDF',  th: 'PowerPoint เป็น PDF' } },
-  { from: 'pdf',  to: 'txt', category: 'document', engine: 'poppler',     label: { en: 'PDF to Text',        th: 'PDF เป็น ข้อความ (TXT)' } },
+  { from: 'pdf',  to: 'docx', category: 'document', engine: 'libreoffice', label: { en: 'PDF to Word',        th: 'PDF เป็น Word' } },
+  { from: 'pdf',  to: 'pptx', category: 'document', engine: 'libreoffice', label: { en: 'PDF to PowerPoint',  th: 'PDF เป็น PowerPoint' } },
+  { from: 'pdf',  to: 'xlsx', category: 'document', engine: 'libreoffice', label: { en: 'PDF to Excel',       th: 'PDF เป็น Excel' } },
+  { from: 'pdf',  to: 'txt',  category: 'document', engine: 'poppler',     label: { en: 'PDF to Text',        th: 'PDF เป็น ข้อความ (TXT)' } },
+  { from: 'docx', to: 'pdf',  category: 'document', engine: 'libreoffice', label: { en: 'Word to PDF',        th: 'Word เป็น PDF' } },
+  { from: 'doc',  to: 'pdf',  category: 'document', engine: 'libreoffice', label: { en: 'Word to PDF',        th: 'Word เป็น PDF' } },
+  { from: 'pptx', to: 'pdf',  category: 'document', engine: 'libreoffice', label: { en: 'PowerPoint to PDF',  th: 'PowerPoint เป็น PDF' } },
+  { from: 'ppt',  to: 'pdf',  category: 'document', engine: 'libreoffice', label: { en: 'PowerPoint to PDF',  th: 'PowerPoint เป็น PDF' } },
 
   // --------------------------------------------
   // Image Conversions

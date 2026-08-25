@@ -12,6 +12,35 @@ import { join } from 'path'
 const execAsync = promisify(exec)
 
 /**
+ * LibreOffice requires explicit filter names for many conversions.
+ * Without the correct filter name, it cannot find the right exporter.
+ * 
+ * Format: --convert-to "format:FilterName"
+ * Filters reference: https://wiki.documentfoundation.org/Documentation/DevGuide/Spreadsheet_Documents
+ */
+const FILTER_MAP: Record<string, string> = {
+  // Office → PDF
+  'pdf': 'writer_pdf_Export',
+
+  // PDF / Office → Word
+  'docx': 'MS Word 2007 XML',
+  'doc':  'MS Word 97',
+
+  // Office → PowerPoint
+  'pptx': 'Impress MS PowerPoint 2007 XML',
+  'ppt':  'MS PowerPoint 97',
+
+  // Office → Excel / CSV
+  'xlsx': 'Calc MS Excel 2007 XML',
+  'xls':  'MS Excel 97',
+  'csv':  'Text - txt - csv (StarCalc)',
+
+  // Open Document
+  'odt':  'writer8',
+  'ods':  'calc8',
+}
+
+/**
  * Convert a document using LibreOffice headless mode.
  * Creates a temp directory, writes input, runs conversion, reads output.
  */
@@ -20,40 +49,38 @@ export async function convertWithLibreOffice(
   inputFormat: string,
   outputFormat: string,
 ): Promise<Buffer> {
-  // Create isolated temp directory for this conversion
-  const tempDir = await mkdtemp(join(tmpdir(), 'whatpdf-'))
+  const tempDir    = await mkdtemp(join(tmpdir(), 'whatpdf-'))
   const inputPath  = join(tempDir, `input.${inputFormat}`)
   const outputPath = join(tempDir, `input.${outputFormat}`)
 
   try {
-    // Write input file to disk
     await writeFile(inputPath, inputBuffer)
 
-    // Run LibreOffice conversion
-    // --headless:    no GUI
-    // --norestore:   don't restore previous session
-    // --convert-to:  target format
-    // --outdir:      output directory
+    // Build the --convert-to argument with explicit filter if available
+    const filterName = FILTER_MAP[outputFormat]
+    const convertTo  = filterName
+      ? `"${outputFormat}:${filterName}"`
+      : outputFormat
+
     const cmd = [
       'libreoffice',
       '--headless',
       '--norestore',
-      `--convert-to ${outputFormat}`,
+      `--convert-to ${convertTo}`,
       `--outdir "${tempDir}"`,
       `"${inputPath}"`,
     ].join(' ')
 
     const { stderr } = await execAsync(cmd, { timeout: 120_000 }) // 2 min timeout
 
+    // LibreOffice sometimes writes warnings to stderr — only throw on real errors
     if (stderr && stderr.toLowerCase().includes('error')) {
       throw new Error(`LibreOffice error: ${stderr}`)
     }
 
-    // Read and return the converted file
     const outputBuffer = await readFile(outputPath)
     return outputBuffer
   } finally {
-    // Always clean up temp files, even on error
     await rm(tempDir, { recursive: true, force: true })
   }
 }
