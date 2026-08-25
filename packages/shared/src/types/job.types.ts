@@ -5,7 +5,7 @@
 export type JobStatus = 'pending' | 'processing' | 'done' | 'failed'
 
 export interface ConversionJob {
-  id: string
+  jobId: string
   inputFileKey: string       // R2/S3 key for input file
   outputFileKey?: string     // R2/S3 key for output (set when done)
   inputFormat: string        // e.g. 'pdf'
