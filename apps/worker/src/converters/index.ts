@@ -7,7 +7,7 @@ import { generateFileKey, MIME_TYPES } from '@whatpdf/shared'
 import type { FileFormat } from '@whatpdf/shared'
 import { convertWithSharp } from './image.converter'
 import { convertWithLibreOffice } from './libreoffice.converter'
-import { convertPdfToImage, convertPdfToText, convertPdfToDocx } from './pdf.converter'
+import { convertPdfToImage, convertPdfToText, convertPdfToDocx, convertPdfToXlsx } from './pdf.converter'
 
 interface ConvertOptions {
   jobId: string
@@ -54,6 +54,10 @@ export async function convertFile(opts: ConvertOptions): Promise<ConvertResult> 
   } else if (from === 'pdf' && to === 'docx') {
     // PDF → DOCX — Python pdf2docx
     outputBuffer = await convertPdfToDocx(inputBuffer)
+
+  } else if (from === 'pdf' && to === 'xlsx') {
+    // PDF → XLSX — Python pdfplumber/pandas
+    outputBuffer = await convertPdfToXlsx(inputBuffer)
 
   } else if (
     (OFFICE_FORMATS.includes(from) && to === 'pdf') ||

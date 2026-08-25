@@ -97,3 +97,27 @@ export async function convertPdfToDocx(inputBuffer: Buffer): Promise<Buffer> {
     await rm(tempDir, { recursive: true, force: true })
   }
 }
+
+/**
+ * Convert PDF to XLSX using Python's pdfplumber and pandas.
+ * This extracts tables and text into an Excel file, avoiding LibreOffice crashes.
+ */
+export async function convertPdfToXlsx(inputBuffer: Buffer): Promise<Buffer> {
+  const tempDir = await mkdtemp(join(tmpdir(), 'whatpdf-xlsx-'))
+  const inputPath = join(tempDir, 'input.pdf')
+  const outputPath = join(tempDir, 'out.xlsx')
+  
+  try {
+    await writeFile(inputPath, inputBuffer)
+    
+    // Call the Python script
+    const scriptPath = join(__dirname, 'pdf_to_xlsx.py')
+    const cmd = `python "${scriptPath}" "${inputPath}" "${outputPath}"`
+    await execAsync(cmd, { timeout: 120_000 })
+    
+    const outputBuffer = await readFile(outputPath)
+    return outputBuffer
+  } finally {
+    await rm(tempDir, { recursive: true, force: true })
+  }
+}
