@@ -56,3 +56,40 @@ export async function GET(
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }
+
+export async function DELETE(
+  _req: NextRequest,
+  { params }: { params: Promise<{ jobId: string }> },
+) {
+  const { jobId } = await params
+
+  try {
+    const queue = getConversionQueue()
+    const job = await queue.getJob(jobId)
+
+    if (!job) {
+      return NextResponse.json({ error: 'Job not found' }, { status: 404 })
+    }
+
+    // Delete files from R2
+    const { deleteFile } = await import('@/lib/storage/r2')
+    
+    // 1. Delete input file
+    if (job.data.inputFileKey) {
+      await deleteFile(job.data.inputFileKey).catch(console.error)
+    }
+    
+    // 2. Delete output file (if exists)
+    if (job.returnvalue?.outputFileKey) {
+      await deleteFile(job.returnvalue.outputFileKey).catch(console.error)
+    }
+
+    // 3. Remove job from Redis
+    await job.remove()
+
+    return NextResponse.json({ success: true })
+  } catch (err) {
+    console.error('[/api/jobs] Delete Error:', err)
+    return NextResponse.json({ error: 'Failed to delete job' }, { status: 500 })
+  }
+}

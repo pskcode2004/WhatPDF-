@@ -58,5 +58,12 @@ export async function getPresignedDownloadUrl(key: string, expiresInSeconds = 86
 
 /** Delete a file from R2/S3 */
 export async function deleteFile(key: string): Promise<void> {
-  await s3Client.send(new DeleteObjectCommand({ Bucket: BUCKET, Key: key }))
+  if (isLocalFallback) {
+    try {
+      await fs.unlink(path.join(LOCAL_STORAGE_DIR, key.replace(/\//g, '_')))
+    } catch {} // Ignore
+    return
+  }
+  await s3Client!.send(new DeleteObjectCommand({ Bucket: BUCKET, Key: key }))
 }
+

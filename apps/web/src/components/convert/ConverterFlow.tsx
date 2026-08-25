@@ -54,8 +54,8 @@ export function ConverterFlow({ from, to }: ConverterFlowProps) {
       {step === 'converting' && jobId && (
         <ProgressStep jobId={jobId} onSuccess={handleConvertDone} onError={handleError} />
       )}
-      {step === 'done' && downloadUrl && (
-        <DownloadStep downloadUrl={downloadUrl} to={to} onReset={handleReset} />
+      {step === 'done' && downloadUrl && jobId && (
+        <DownloadStep downloadUrl={downloadUrl} to={to} jobId={jobId} onReset={handleReset} />
       )}
       {step === 'error' && (
         <div className="text-center py-8">
