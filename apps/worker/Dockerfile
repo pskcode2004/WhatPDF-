@@ -30,6 +30,6 @@ COPY apps/worker ./apps/worker
 
 # Install only worker dependencies (and tsx for running it)
 RUN pnpm install --filter @whatpdf/worker...
-RUN pnpm add -g tsx
+RUN npm install -g tsx
 
 CMD ["tsx", "apps/worker/src/index.ts"]
