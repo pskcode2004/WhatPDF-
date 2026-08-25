@@ -30,23 +30,33 @@ export interface ConversionRoute {
 // All supported conversion routes
 // ============================================
 export const CONVERSION_ROUTES: ConversionRoute[] = [
-  // --- PDF <-> Documents ---
-  { from: 'pdf',  to: 'docx', category: 'document',     engine: 'libreoffice', label: { en: 'PDF to Word',        th: 'PDF เป็น Word' } },
-  { from: 'pdf',  to: 'pptx', category: 'document',     engine: 'libreoffice', label: { en: 'PDF to PowerPoint',  th: 'PDF เป็น PowerPoint' } },
-  { from: 'pdf',  to: 'xlsx', category: 'document',     engine: 'libreoffice', label: { en: 'PDF to Excel',       th: 'PDF เป็น Excel' } },
-  { from: 'pdf',  to: 'txt',  category: 'document',     engine: 'pdf-lib',     label: { en: 'PDF to Text',        th: 'PDF เป็น Text' } },
-  { from: 'pdf',  to: 'jpg',  category: 'image',        engine: 'pdf-lib',     label: { en: 'PDF to Image',       th: 'PDF เป็น รูปภาพ' } },
-  { from: 'docx', to: 'pdf',  category: 'document',     engine: 'libreoffice', label: { en: 'Word to PDF',        th: 'Word เป็น PDF' } },
-  { from: 'pptx', to: 'pdf',  category: 'document',     engine: 'libreoffice', label: { en: 'PowerPoint to PDF',  th: 'PowerPoint เป็น PDF' } },
-  { from: 'xlsx', to: 'pdf',  category: 'document',     engine: 'libreoffice', label: { en: 'Excel to PDF',       th: 'Excel เป็น PDF' } },
-  // --- Images ---
-  { from: 'jpg',  to: 'png',  category: 'image',        engine: 'sharp',       label: { en: 'JPG to PNG',         th: 'JPG เป็น PNG' } },
-  { from: 'png',  to: 'jpg',  category: 'image',        engine: 'sharp',       label: { en: 'PNG to JPG',         th: 'PNG เป็น JPG' } },
-  { from: 'jpg',  to: 'webp', category: 'image',        engine: 'sharp',       label: { en: 'JPG to WebP',        th: 'JPG เป็น WebP' } },
-  { from: 'png',  to: 'webp', category: 'image',        engine: 'sharp',       label: { en: 'PNG to WebP',        th: 'PNG เป็น WebP' } },
-  { from: 'webp', to: 'jpg',  category: 'image',        engine: 'sharp',       label: { en: 'WebP to JPG',        th: 'WebP เป็น JPG' } },
-  { from: 'heic', to: 'jpg',  category: 'image',        engine: 'sharp',       label: { en: 'HEIC to JPG',        th: 'HEIC เป็น JPG' } },
-  // --- Spreadsheets ---
+  // --------------------------------------------
+  // Document Conversions
+  // --------------------------------------------
+  { from: 'docx', to: 'pdf', category: 'document', engine: 'libreoffice', label: { en: 'Word to PDF',        th: 'Word เป็น PDF' } },
+  { from: 'doc',  to: 'pdf', category: 'document', engine: 'libreoffice', label: { en: 'Word to PDF',        th: 'Word เป็น PDF' } },
+  { from: 'pptx', to: 'pdf', category: 'document', engine: 'libreoffice', label: { en: 'PowerPoint to PDF',  th: 'PowerPoint เป็น PDF' } },
+  { from: 'ppt',  to: 'pdf', category: 'document', engine: 'libreoffice', label: { en: 'PowerPoint to PDF',  th: 'PowerPoint เป็น PDF' } },
+  { from: 'pdf',  to: 'txt', category: 'document', engine: 'poppler',     label: { en: 'PDF to Text',        th: 'PDF เป็น ข้อความ (TXT)' } },
+
+  // --------------------------------------------
+  // Image Conversions
+  // --------------------------------------------
+  { from: 'pdf',  to: 'jpg',  category: 'image', engine: 'poppler', label: { en: 'PDF to JPG', th: 'PDF เป็น JPG' } },
+  { from: 'pdf',  to: 'png',  category: 'image', engine: 'poppler', label: { en: 'PDF to PNG', th: 'PDF เป็น PNG' } },
+  { from: 'jpg',  to: 'pdf',  category: 'image', engine: 'sharp',   label: { en: 'JPG to PDF', th: 'JPG เป็น PDF' } },
+  { from: 'png',  to: 'pdf',  category: 'image', engine: 'sharp',   label: { en: 'PNG to PDF', th: 'PNG เป็น PDF' } },
+  { from: 'jpg',  to: 'png',  category: 'image', engine: 'sharp',   label: { en: 'JPG to PNG', th: 'JPG เป็น PNG' } },
+  { from: 'png',  to: 'jpg',  category: 'image', engine: 'sharp',   label: { en: 'PNG to JPG', th: 'PNG เป็น JPG' } },
+  { from: 'webp', to: 'jpg',  category: 'image', engine: 'sharp',   label: { en: 'WEBP to JPG',th: 'WEBP เป็น JPG' } },
+  { from: 'jpg',  to: 'webp', category: 'image', engine: 'sharp',   label: { en: 'JPG to WEBP',th: 'JPG เป็น WEBP' } },
+  { from: 'png',  to: 'webp', category: 'image', engine: 'sharp',   label: { en: 'PNG to WEBP',th: 'PNG เป็น WEBP' } },
+
+  // --------------------------------------------
+  // Spreadsheet Conversions
+  // --------------------------------------------
+  { from: 'xlsx', to: 'pdf',  category: 'spreadsheet',  engine: 'libreoffice', label: { en: 'Excel to PDF',       th: 'Excel เป็น PDF' } },
+  { from: 'xls',  to: 'pdf',  category: 'spreadsheet',  engine: 'libreoffice', label: { en: 'Excel to PDF',       th: 'Excel เป็น PDF' } },
   { from: 'csv',  to: 'xlsx', category: 'spreadsheet',  engine: 'libreoffice', label: { en: 'CSV to Excel',       th: 'CSV เป็น Excel' } },
   { from: 'xlsx', to: 'csv',  category: 'spreadsheet',  engine: 'libreoffice', label: { en: 'Excel to CSV',       th: 'Excel เป็น CSV' } },
 ]

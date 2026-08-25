@@ -7,7 +7,7 @@ import { generateFileKey, MIME_TYPES } from '@whatpdf/shared'
 import type { FileFormat } from '@whatpdf/shared'
 import { convertWithSharp } from './image.converter'
 import { convertWithLibreOffice } from './libreoffice.converter'
-import { convertPdfToImage } from './pdf.converter'
+import { convertPdfToImage, convertPdfToText } from './pdf.converter'
 
 interface ConvertOptions {
   jobId: string
@@ -23,7 +23,7 @@ interface ConvertResult {
 }
 
 // Format groups
-const IMAGE_FORMATS  = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'tiff', 'heic']
+const IMAGE_FORMATS  = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'tiff']
 const OFFICE_FORMATS = ['docx', 'doc', 'pptx', 'ppt', 'xlsx', 'xls', 'csv', 'odt', 'ods']
 
 export async function convertFile(opts: ConvertOptions): Promise<ConvertResult> {
@@ -44,12 +44,15 @@ export async function convertFile(opts: ConvertOptions): Promise<ConvertResult> 
     outputBuffer = await convertWithSharp(inputBuffer, to)
 
   } else if (from === 'pdf' && IMAGE_FORMATS.includes(to)) {
-    // PDF → Image — pdf-lib + Sharp
+    // PDF → Image — poppler
     outputBuffer = await convertPdfToImage(inputBuffer, to)
 
+  } else if (from === 'pdf' && to === 'txt') {
+    // PDF → Text — poppler
+    outputBuffer = await convertPdfToText(inputBuffer)
+
   } else if (
-    (OFFICE_FORMATS.includes(from) && to === 'pdf') || 
-    (from === 'pdf' && OFFICE_FORMATS.includes(to)) ||
+    (OFFICE_FORMATS.includes(from) && to === 'pdf') ||
     (OFFICE_FORMATS.includes(from) && OFFICE_FORMATS.includes(to))
   ) {
     // Office ↔ PDF or Office ↔ Office — LibreOffice

@@ -51,3 +51,26 @@ export async function convertPdfToImage(
     await rm(tempDir, { recursive: true, force: true })
   }
 }
+
+/**
+ * Convert PDF to Text using pdftotext (from poppler-utils).
+ */
+export async function convertPdfToText(inputBuffer: Buffer): Promise<Buffer> {
+  const tempDir = await mkdtemp(join(tmpdir(), 'whatpdf-txt-'))
+  const inputPath = join(tempDir, 'input.pdf')
+  const outputPath = join(tempDir, 'out.txt')
+  
+  try {
+    await writeFile(inputPath, inputBuffer)
+    
+    // Use pdftotext to extract text
+    // -enc UTF-8 : output UTF-8 text
+    const cmd = `pdftotext -enc UTF-8 "${inputPath}" "${outputPath}"`
+    await execAsync(cmd, { timeout: 60_000 })
+    
+    const outputBuffer = await readFile(outputPath)
+    return outputBuffer
+  } finally {
+    await rm(tempDir, { recursive: true, force: true })
+  }
+}
