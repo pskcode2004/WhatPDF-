@@ -47,8 +47,12 @@ export async function convertFile(opts: ConvertOptions): Promise<ConvertResult> 
     // PDF → Image — pdf-lib + Sharp
     outputBuffer = await convertPdfToImage(inputBuffer, to)
 
-  } else if (OFFICE_FORMATS.includes(from) || to === 'pdf') {
-    // Office documents (Word/Excel/PPT) ↔ PDF — LibreOffice
+  } else if (
+    (OFFICE_FORMATS.includes(from) && to === 'pdf') || 
+    (from === 'pdf' && OFFICE_FORMATS.includes(to)) ||
+    (OFFICE_FORMATS.includes(from) && OFFICE_FORMATS.includes(to))
+  ) {
+    // Office ↔ PDF or Office ↔ Office — LibreOffice
     outputBuffer = await convertWithLibreOffice(inputBuffer, from, to)
 
   } else {
